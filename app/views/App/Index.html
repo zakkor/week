@@ -1,0 +1,28 @@
+{{set . "title" "Home"}}
+{{template "header.html" .}}
+{{template "navbar.html"}}
+
+<header class="jumbotron" style="background-color:#A9F16C">
+    <div class="container">
+        <div class="row">
+            <h1>It works!</h1>
+            <p></p>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row">
+        <div class="span6">
+            {{template "flash.html" .}}
+        </div>
+    </div>
+</div>
+<div class="container">
+    <form action="/App/Hello" method="GET">
+        <input type="text" class="form-control" name="myName" /><br/>
+        <input type="submit" class="btn btn-primary" value="Say hello!" />
+    </form>
+</div>
+
+{{template "footer.html" .}}
