@@ -1,5 +1,12 @@
 {{if ne . ""}}
-<a href="/Secure/Exclusive"> {{.}} </a>
+<li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> {{.}} <span class="caret"></span></a>
+    <ul class="dropdown-menu">
+        <li><a href="/User/Settings">Settings</a></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="/User/Logout">Log out</a></li>
+    </ul>
+</li>
 {{else}}
 <a href="/User/SignIn"> Sign in or register </a>
 {{end}}

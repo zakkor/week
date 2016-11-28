@@ -1,0 +1,9 @@
+{{set . "title" .post.Title}}
+{{template "header.html" .}}
+{{template "navbar.html" .userName}}
+
+<div class="container">
+    {{ template "post.html" .post}}
+</div>
+
+{{template "footer.html" .}}

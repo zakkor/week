@@ -1,20 +1,21 @@
 package app
 
 import (
-	"database/sql"
+	//	"database/sql"
 	"fmt"
+	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 	"github.com/revel/revel"
 )
 
-var DB *sql.DB
+var DB *sqlx.DB
 
 func InitDB() {
 	connstring := fmt.Sprintf("user=%s password='%s' dbname=%s sslmode=disable",
 		"ed", "", "weekDB")
 
 	var err error
-	DB, err = sql.Open("postgres", connstring)
+	DB, err = sqlx.Open("postgres", connstring)
 	if err != nil {
 		revel.INFO.Println("DB Error", err)
 	}

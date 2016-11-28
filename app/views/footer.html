@@ -1,5 +1,33 @@
-  {{if eq .RunMode "dev"}}
-  <!-- {{template "debug.html" .}} -->
-  {{end}}
+{{if eq .RunMode "dev"}}
+<!-- {{template "debug.html" .}} -->
+{{end}}
+
+<style>
+ html {
+     position: relative;
+     min-height: 100%;
+ }
+ body {
+     /* Margin bottom by footer height */
+     margin-bottom: 40px;
+ }
+ .footer {
+     position: absolute;
+     bottom: 0;
+     width: 100%;
+     /* Set the fixed height of the footer here */
+     height: 40px;
+     background-color: #f5f5f5;
+ }
+ #footer-text {
+     margin-top: 10px;
+ }
+</style>
+<footer class="footer">
+    <div class="container text-center">
+	<p id="footer-text" class="text-muted">© 2016 Company, Inc. · <a class="text-muted" href="#">Privacy</a> · <a class="text-muted" href="#">Terms</a></p>
+    </div>
+</footer>
+
   </body>
 </html>

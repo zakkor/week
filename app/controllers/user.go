@@ -8,8 +8,6 @@ import (
 	"week/app"
 )
 
-var userSessions map[string]string = make(map[string]string)
-
 type User struct {
 	*revel.Controller
 }
@@ -61,16 +59,15 @@ func (c *User) SubmitSignIn(signUsername, signPassword string, rememberMe bool) 
 		revel.INFO.Println("ERROR: querying db")
 		revel.INFO.Println(err)
 	} else {
-		for rows.Next() {
-			var email, name, password string
-			if err := rows.Scan(&email, &name, &password); err != nil {
-				revel.INFO.Println("error")
-			}
-			foundUser = true
+		rows.Next()
+		var email, name, password string
+		if err := rows.Scan(&email, &name, &password); err != nil {
+			revel.INFO.Println("error")
+		}
+		foundUser = true
 
-			if password == hash(signPassword) {
-				passwordMatches = true
-			}
+		if password == hash(signPassword) {
+			passwordMatches = true
 		}
 		if err := rows.Err(); err != nil {
 			revel.INFO.Println("ERROR: in rows")
@@ -93,7 +90,7 @@ func (c *User) SubmitSignIn(signUsername, signPassword string, rememberMe bool) 
 	generateSession(&c.Session)
 
 	c.Flash.Success("Welcome", signUsername)
-	return c.Redirect(App.Index)
+	return c.Redirect(App.Feed)
 }
 
 func (c *User) Register(registerEmail, registerUsername,
@@ -132,5 +129,23 @@ func (c *User) Register(registerEmail, registerUsername,
 	generateSession(&c.Session)
 	c.Flash.Success("Welcome", registerUsername)
 
+	return c.Redirect(App.Feed)
+}
+
+func (c *User) Logout() revel.Result {
+	if res := checkSession(&c.Session, &c.Flash); !res {
+		return c.Redirect(User.SignIn)
+	}
+
+	c.Session = make(map[string]string)
 	return c.Redirect(App.Index)
+}
+
+func (c *User) Settings() revel.Result {
+	if res := checkSession(&c.Session, &c.Flash); !res {
+		return c.Redirect(User.SignIn)
+	}
+
+	userName := string(c.Session["user"])
+	return c.Render(userName)
 }
