@@ -1,6 +1,6 @@
 {{set . "title" "Sign In"}}
 {{template "header.html" .}}
-{{template "navbar.html" }}
+{{template "navbar.html" .userName}}
 
 <div class="container">
     <div class="row">
@@ -23,7 +23,7 @@
 
 <div class="container">
     <div class="row">
-	<form class="col-xs-6" method="post" action="{{url "App.SubmitSignIn"}}">
+	<form class="col-xs-6" method="post" action="{{url "User.SubmitSignIn"}}">
 	    <div class="form-group row">
 		<label for="signUsername" class="col-sm-3 col-form-label">User name</label>
 		<div class="col-sm-9">
@@ -60,7 +60,7 @@
 		</div>
 	    </div>
 	</form>
-	<form class="col-xs-6" method="post" action="{{url "App.Register"}}">
+	<form class="col-xs-6" method="post" action="{{url "User.Register"}}">
 	    <div class="form-group row">
 		<label for="registerEmail" class="col-sm-3 col-form-label">Email</label>
 		<div class="col-sm-9">
