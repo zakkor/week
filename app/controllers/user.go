@@ -12,6 +12,10 @@ type User struct {
 	*revel.Controller
 }
 
+type UserModel struct {
+	Email, Name, Password, Session string
+}
+
 const salt string = "($#*shorseyAJSKLDSJAKLS914182901skj)"
 
 func (c *User) checkErrors() bool {
@@ -52,21 +56,23 @@ func (c *User) SubmitSignIn(signUsername, signPassword string, rememberMe bool) 
 	foundUser := false
 	passwordMatches := false
 
-	rows, err := app.DB.Query("SELECT * FROM users WHERE name=$1", signUsername)
+	rows, err := app.DB.Queryx("SELECT * FROM users WHERE name=$1", signUsername)
 	defer rows.Close()
 
+	userModel := UserModel{}
 	if err != nil {
 		revel.INFO.Println("ERROR: querying db")
 		revel.INFO.Println(err)
 	} else {
 		rows.Next()
-		var email, name, password string
-		if err := rows.Scan(&email, &name, &password); err != nil {
+
+		if err := rows.StructScan(&userModel); err != nil {
 			revel.INFO.Println("error")
+			revel.INFO.Println(err)
 		}
 		foundUser = true
 
-		if password == hash(signPassword) {
+		if userModel.Password == hash(signPassword) {
 			passwordMatches = true
 		}
 		if err := rows.Err(); err != nil {
@@ -84,6 +90,8 @@ func (c *User) SubmitSignIn(signUsername, signPassword string, rememberMe bool) 
 	if c.checkErrors() {
 		return c.Redirect(User.SignIn)
 	}
+
+	revel.INFO.Println(revel.Slug("The impact of globalization"))
 
 	// all good, we log the user in and redirect him to Index
 	c.Session["user"] = signUsername
