@@ -57,12 +57,12 @@ func (c *User) SubmitSignIn(signUsername, signPassword string, rememberMe bool) 
 	passwordMatches := false
 
 	rows, err := app.DB.Queryx("SELECT * FROM users WHERE name=$1", signUsername)
-	defer rows.Close()
 
 	userModel := UserModel{}
 	if err != nil {
 		revel.INFO.Println("ERROR: querying db")
 		revel.INFO.Println(err)
+
 	} else {
 		rows.Next()
 
@@ -80,6 +80,8 @@ func (c *User) SubmitSignIn(signUsername, signPassword string, rememberMe bool) 
 			revel.INFO.Println(err)
 		}
 	}
+
+	defer rows.Close()
 
 	if !foundUser || !passwordMatches {
 		c.Validation.Error("Wrong username or password!")

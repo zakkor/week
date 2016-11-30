@@ -9,7 +9,7 @@
 		            <!-- Blog Post -->
 
 		            <!-- Title -->
-                <h1><a href="/post/{{.Id}}">{{.Title}}</a></h1>
+                <h1>{{.Title}}</h1>
 
 		            <!-- Author -->
 		            <p class="lead">
@@ -42,7 +42,18 @@
 		            </style>
 		            <!-- Comments Form -->
 
-
+                <div class="well alert alert-info">
+                    <h4>Leave a Comment:</h4>
+                    <form role="form">
+			                  <div class="form-group">
+			                      <textarea id="{{ .Id }}"></textarea>
+			                      <script>
+			                       var simplemde = new SimpleMDE({ element: document.getElementById("{{ .Id }}") });
+			                      </script>
+			                  </div>
+			                  <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+		            </div>
 
 		            <!-- Posted Comments -->
 

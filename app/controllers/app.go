@@ -3,6 +3,7 @@ package controllers
 import (
 	//"github.com/jmoiron/sqlx"
 	"github.com/revel/revel"
+	//	"github.com/satori/go.uuid"
 	"week/app"
 )
 
@@ -29,27 +30,61 @@ func (c App) Feed() revel.Result {
 		return c.Redirect(User.SignIn)
 	}
 
-	Posts := []Post{Post{
-		"asdasdas",
-		"The impact of globalization",
-		"John",
-		"12",
-		"asdf",
-		"asdasdasdasdasd",
-	}}
+	Posts := []Post{}
+
+	rows, err := app.DB.Queryx("SELECT * FROM posts")
+
+	if err != nil {
+		revel.INFO.Println("ERROR: querying db")
+		revel.INFO.Println(err)
+
+	} else {
+		for rows.Next() {
+			post := Post{}
+			if err := rows.StructScan(&post); err != nil {
+				revel.INFO.Println("error")
+				revel.INFO.Println(err)
+			} else {
+				Posts = append(Posts, post)
+			}
+		}
+	}
+
+	defer rows.Close()
 
 	userName := string(c.Session["user"])
 	return c.Render(userName, Posts)
 }
 
+func (c App) EditPost() revel.Result {
+	userName := string(c.Session["user"])
+	return c.Render(userName)
+}
+
+func (c App) SubmitPost(titleInput, imageInput, contentInput string) revel.Result {
+
+	revel.INFO.Println(titleInput, imageInput, contentInput)
+	res, err := app.DB.Queryx("INSERT INTO posts VALUES(DEFAULT, $1, $2, now(), $3, $4) RETURNING id", titleInput, "johnny", imageInput, contentInput)
+	if err != nil {
+		revel.INFO.Println(err)
+	}
+	res.Next()
+	id := ""
+	res.Scan(&id)
+	revel.INFO.Println(id)
+	return c.Redirect("/post/%s", id)
+}
+
 func (c App) ViewPost(id string) revel.Result {
 	rows, err := app.DB.Queryx("SELECT * FROM posts WHERE id=$1", id)
-	defer rows.Close()
 
 	if err != nil {
 		revel.INFO.Println("ERROR: querying db")
-		panic(err)
+		c.Redirect("/")
+		//		panic(err)
 	}
+
+	defer rows.Close()
 
 	post := Post{}
 

@@ -1,0 +1,48 @@
+{{set . "title" "New post"}}
+{{template "header.html" .}}
+{{template "navbar.html" .userName}}
+
+<div class="container">
+    <div class="well">
+	      <div class="row">
+
+            <!-- Blog Post Content Column -->
+            <div class="col-lg-12">
+                <form method="post" action="{{url "App.SubmitPost"}}">
+		                <!-- Blog Post -->
+
+		                <!-- Title -->
+		                <h3>Title</h3>
+                    <input type="text" class="form-control"
+                           name="titleInput">
+
+		                <hr>
+
+		                <!-- Preview Image -->
+                    <h3>Image</h3>
+                    <input type="text" class="form-control"
+                           name="imageInput">
+
+
+		                <hr>
+
+		                <!-- Post Content -->
+                    <h3>Content</h3>
+                    <textarea id="formMde" name="contentInput"></textarea>
+                    <script>
+			               var simplemde = new SimpleMDE({ element: document.getElementById("formMde") });
+			              </script>
+			              <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+
+                </form>
+
+		            <hr>
+
+
+            </div>
+	      </div>
+    </div>
+</div>
+
+{{template "footer.html" .}}

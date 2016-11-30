@@ -18,6 +18,7 @@ func InitDB() {
 	DB, err = sqlx.Open("postgres", connstring)
 	if err != nil {
 		revel.INFO.Println("DB Error", err)
+		panic(err)
 	}
 	revel.INFO.Println("DB Connected")
 }
