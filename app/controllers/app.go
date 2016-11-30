@@ -62,9 +62,9 @@ func (c App) EditPost() revel.Result {
 }
 
 func (c App) SubmitPost(titleInput, imageInput, contentInput string) revel.Result {
+	userName := string(c.Session["user"])
 
-	revel.INFO.Println(titleInput, imageInput, contentInput)
-	res, err := app.DB.Queryx("INSERT INTO posts VALUES(DEFAULT, $1, $2, now(), $3, $4) RETURNING id", titleInput, "johnny", imageInput, contentInput)
+	res, err := app.DB.Queryx("INSERT INTO posts VALUES(DEFAULT, $1, $2, now(), $3, $4) RETURNING id", titleInput, userName, imageInput, contentInput)
 	if err != nil {
 		revel.INFO.Println(err)
 	}
