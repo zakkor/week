@@ -23,13 +23,13 @@
 
 		            <hr>
 
-		            <!-- Preview Image -->
-		            <img class="img-responsive" src="{{ .Picture }}" alt="">
-
-		            <hr>
-
 		            <!-- Post Content -->
-		            <p class="lead">{{ .Content }}</p>
+		            <p class="lead" id="content-markdown"></p>
+                <script>
+                 var converter = new showdown.Converter(),
+                     html      = converter.makeHtml({{ .Content }});
+                 document.getElementById("content-markdown").innerHTML = html
+                </script>
 
 		            <hr>
 
@@ -58,7 +58,7 @@
 		            <!-- Posted Comments -->
 
 		            <!-- Comment -->
-		            <div class="media">
+		            <div class="media well">
                     <a class="pull-left" href="#">
 			                  <img class="media-object" src="http://placehold.it/64x64" alt="">
                     </a>
@@ -71,7 +71,7 @@
 		            </div>
 
 		            <!-- Comment -->
-		            <div class="media">
+		            <div class="media well">
                     <a class="pull-left" href="#">
 			                  <img class="media-object" src="http://placehold.it/64x64" alt="">
                     </a>
@@ -81,7 +81,7 @@
 			                  </h4>
 			                  Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
 			                  <!-- Nested Comment -->
-			                  <div class="media">
+			                  <div class="media well">
                             <a class="pull-left" href="#">
 				                        <img class="media-object" src="http://placehold.it/64x64" alt="">
                             </a>

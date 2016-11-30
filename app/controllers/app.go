@@ -21,7 +21,6 @@ type Post struct {
 	Title   string
 	Author  string
 	Date    string
-	Picture string
 	Content string
 }
 
@@ -57,14 +56,22 @@ func (c App) Feed() revel.Result {
 }
 
 func (c App) EditPost() revel.Result {
+	if res := checkSession(&c.Session, &c.Flash); !res {
+		return c.Redirect(User.SignIn)
+	}
+
 	userName := string(c.Session["user"])
 	return c.Render(userName)
 }
 
-func (c App) SubmitPost(titleInput, imageInput, contentInput string) revel.Result {
+func (c App) SubmitPost(titleInput, contentInput string) revel.Result {
+	if res := checkSession(&c.Session, &c.Flash); !res {
+		return c.Redirect(User.SignIn)
+	}
+
 	userName := string(c.Session["user"])
 
-	res, err := app.DB.Queryx("INSERT INTO posts VALUES(DEFAULT, $1, $2, now(), $3, $4) RETURNING id", titleInput, userName, imageInput, contentInput)
+	res, err := app.DB.Queryx("INSERT INTO posts VALUES(DEFAULT, $1, $2, now(), $3) RETURNING id", titleInput, userName, contentInput)
 	if err != nil {
 		revel.INFO.Println(err)
 	}
