@@ -2,8 +2,11 @@
 {{template "header.html" .}}
 {{template "navbar.html" .userName}}
 
+{{ template "post-detailed.html" .post}}
 <div class="container">
-    {{ template "post-detailed.html" .post}}
+    {{ range .comments }}
+    {{ template "comment.html" .}}
+    {{ end }}
 </div>
 
 {{template "footer.html" .}}

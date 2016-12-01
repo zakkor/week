@@ -16,23 +16,26 @@
                     by <a href="#">{{.Author}}</a>
 		            </p>
 
-		            <hr>
-
 		            <!-- Date/Time -->
 		            <p><span class="glyphicon glyphicon-time"></span> Posted on {{ .Date }}</p>
 
-		            <hr>
-
 		            <!-- Post Content -->
-		            <p class="lead" id="content-markdown-{{ .Id }}"></p>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+		                    <p class="lead" id="content-markdown-{{ .Id }}"></p>
+                    </div>
+                </div>
+
                 <script>
                  showdown.setOption('parseImgDimensions', 'true');
                  var converter = new showdown.Converter(),
                      html      = converter.makeHtml({{ .Content }});
 
-                 if (html.length > 1500) {
-                     html = html.substring(0, 1500) + ' ...<hr><br>' + '<a class="alert alert-info" href="/post/{{ .Id }}">Read more</a>'
-                 }
+                 html = jQuery.truncate(html, {
+                     length: 1000,
+                     ellipsis: ' ...<hr><a class="alert alert-info pull-left" href="/post/{{ .Id }}">Read more</a>',
+                     words: true
+                 });
 
                  document.getElementById("content-markdown-{{ .Id }}").innerHTML = html
                 </script>
@@ -41,8 +44,8 @@
 		            <!-- Blog Comments -->
 
 		            <style>
-		             .vresize {
-		                 resize: vertical;
+		             .lead {
+                     word-wrap: break-word;
 		             }
 		            </style>
             </div>

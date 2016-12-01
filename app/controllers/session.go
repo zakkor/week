@@ -5,16 +5,22 @@ import (
 	"math/rand"
 	"strconv"
 	"time"
+	"week/app"
 )
 
-// TODO: save and load sessions to db
-var userSessions map[string]string = make(map[string]string)
-
 func checkSession(c *revel.Session, f *revel.Flash) bool {
-	if localsid, ok := userSessions[(*c)["user"]]; ok {
-		if localsid == (*c)["sid"] {
-			return true
-		}
+	res, err := app.DB.Queryx("SELECT session FROM users WHERE name=$1",
+		(*c)["user"])
+	if err != nil {
+		revel.INFO.Println(err)
+		return false
+	}
+	res.Next()
+	dbSid := ""
+	res.Scan(&dbSid)
+
+	if dbSid == (*c)["sid"] && dbSid != "" && (*c)["sid"] != "" {
+		return true
 	}
 
 	revel.INFO.Println("invalid session!!!!")
@@ -32,6 +38,16 @@ func generateSession(c *revel.Session) {
 	randString := strconv.FormatFloat(randFloat, 'E', -1, 64)
 
 	newSid := hash(randString)
-	userSessions[(*c)["user"]] = newSid
+
+	//insert into db
+	_, err := app.DB.Exec("UPDATE users SET session = $1 WHERE name = $2;",
+		newSid,
+		(*c)["user"])
+
+	if err != nil {
+		revel.INFO.Println("ERROR: inserting into db")
+		revel.INFO.Println(err)
+	}
+
 	(*c)["sid"] = newSid
 }

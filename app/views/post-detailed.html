@@ -2,13 +2,12 @@
 <div class="container">
     <div class="well">
 	      <div class="row">
-
             <!-- Blog Post Content Column -->
             <div class="col-lg-12">
-
 		            <!-- Blog Post -->
 
 		            <!-- Title -->
+
                 <h1>{{.Title}}</h1>
 
 		            <!-- Author -->
@@ -16,84 +15,43 @@
                     by <a href="#">{{.Author}}</a>
 		            </p>
 
-		            <hr>
-
 		            <!-- Date/Time -->
 		            <p><span class="glyphicon glyphicon-time"></span> Posted on {{ .Date }}</p>
 
-		            <hr>
-
 		            <!-- Post Content -->
-		            <p class="lead" id="content-markdown"></p>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+		                    <p class="lead" id="content-markdown"></p>
+                    </div>
+                </div>
                 <script>
                  var converter = new showdown.Converter(),
                      html      = converter.makeHtml({{ .Content }});
                  document.getElementById("content-markdown").innerHTML = html
                 </script>
 
-		            <hr>
+                <style>
+		             .lead {
+                     word-wrap: break-word;
+		             }
+		            </style>
 
 		            <!-- Blog Comments -->
 
-		            <style>
-		             .vresize {
-		                 resize: vertical;
-		             }
-		            </style>
 		            <!-- Comments Form -->
 
                 <div class="well alert alert-info">
                     <h4>Leave a Comment:</h4>
-                    <form role="form">
+                    <form role="form" method="post" action="{{url "App.SubmitComment"}}">
 			                  <div class="form-group">
-			                      <textarea id="{{ .Id }}"></textarea>
+			                      <textarea id="{{ .Id }}" name="contentInput"></textarea>
 			                      <script>
 			                       var simplemde = new SimpleMDE({ element: document.getElementById("{{ .Id }}") });
 			                      </script>
 			                  </div>
+                        <input type="hidden" name="parentId" value="{{.Id}}" />
 			                  <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
-		            </div>
-
-		            <!-- Posted Comments -->
-
-		            <!-- Comment -->
-		            <div class="media well">
-                    <a class="pull-left" href="#">
-			                  <img class="media-object" src="http://placehold.it/64x64" alt="">
-                    </a>
-                    <div class="media-body">
-			                  <h4 class="media-heading">Start Bootstrap
-                            <small>August 25, 2014 at 9:30 PM</small>
-			                  </h4>
-			                  Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                    </div>
-		            </div>
-
-		            <!-- Comment -->
-		            <div class="media well">
-                    <a class="pull-left" href="#">
-			                  <img class="media-object" src="http://placehold.it/64x64" alt="">
-                    </a>
-                    <div class="media-body">
-			                  <h4 class="media-heading">Start Bootstrap
-                            <small>August 25, 2014 at 9:30 PM</small>
-			                  </h4>
-			                  Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-			                  <!-- Nested Comment -->
-			                  <div class="media well">
-                            <a class="pull-left" href="#">
-				                        <img class="media-object" src="http://placehold.it/64x64" alt="">
-                            </a>
-                            <div class="media-body">
-				                        <h4 class="media-heading">Nested Start Bootstrap
-                                    <small>August 25, 2014 at 9:30 PM</small>
-				                        </h4>
-				                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                            </div>
-			                  </div>
-			                  <!-- End Nested Comment -->
-                    </div>
 		            </div>
             </div>
 	      </div>

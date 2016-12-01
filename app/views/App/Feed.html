@@ -2,10 +2,10 @@
 {{template "header.html" .}}
 {{template "navbar.html" .userName}}
 
-<div class="container">
+
     {{ range .Posts }}
     {{ template "post.html" .}}
     {{ end }}
-</div>
+
 
 {{template "footer.html" .}}
