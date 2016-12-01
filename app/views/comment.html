@@ -9,6 +9,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <strong>{{.Author}}</strong> <span class="text-muted">commented on {{.Date}}</span>
+                <a class="pull-right text-muted" href="/comment/{{.Id}}"> permalink </a>
             </div>
             <div class="panel-body"><p class="lead" id="content-markdown-{{.Id}}" style="font-size: 1.5em;"> </p></div><!-- /panel-body -->
             <script>

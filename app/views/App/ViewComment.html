@@ -1,0 +1,9 @@
+{{set . "title" .post.Title}}
+{{template "header.html" .}}
+{{template "navbar.html" .userName}}
+
+{{ template "comment.html" .comment}}
+
+<!-- TODO: comment detailed -->
+
+{{template "footer.html" .}}

@@ -170,3 +170,32 @@ func (c App) ViewPost(id string, commentId string) revel.Result {
 	userName := string(c.Session["user"])
 	return c.Render(userName, post, comments, commentId)
 }
+
+func (c App) ViewComment(id string) revel.Result {
+	rows, err := app.DB.Queryx("SELECT * FROM comments WHERE id=$1", id)
+
+	if err != nil {
+		revel.INFO.Println("ERROR: querying db")
+		c.Redirect("/")
+	}
+
+	defer rows.Close()
+
+	comment := Comment{}
+
+	// 1 result guaranteed, so we don't use for
+	rows.Next()
+
+	if err := rows.StructScan(&comment); err != nil {
+		revel.INFO.Println("error")
+		revel.INFO.Println(err)
+	}
+
+	if err := rows.Err(); err != nil {
+		revel.INFO.Println("ERROR: in rows")
+		revel.INFO.Println(err)
+	}
+
+	userName := string(c.Session["user"])
+	return c.Render(comment, userName)
+}
