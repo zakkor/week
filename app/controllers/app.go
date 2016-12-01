@@ -12,6 +12,9 @@ type App struct {
 }
 
 func (c App) Index() revel.Result {
+	if res := checkSession(&c.Session, &c.Flash); res {
+		return c.Redirect("/feed")
+	}
 	userName := string(c.Session["user"])
 	return c.Render(userName)
 }
