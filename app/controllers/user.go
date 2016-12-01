@@ -4,7 +4,6 @@ import (
 	"encoding/hex"
 	"github.com/revel/revel"
 	"golang.org/x/crypto/scrypt"
-
 	"week/app"
 )
 
@@ -133,6 +132,39 @@ func (c *User) Register(registerEmail, registerUsername,
 		revel.INFO.Println("ERROR: inserting into db")
 		revel.INFO.Println(err)
 	}
+
+	// smcl, err := smtp.Dial("localhost")
+	// if err != nil {
+	// 	revel.INFO.Fatal(err)
+	// }
+
+	// // Set the sender and recipient first
+	// if err := smcl.Mail("sender@example.org"); err != nil {
+	// 	revel.INFO.Fatal(err)
+	// }
+	// if err := smcl.Rcpt("edward.partenie@gmail.com"); err != nil {
+	// 	revel.INFO.Fatal(err)
+	// }
+
+	// // Send the email body.
+	// wc, err := smcl.Data()
+	// if err != nil {
+	// 	revel.INFO.Fatal(err)
+	// }
+	// _, err = fmt.Fprintf(wc, "This is the email body")
+	// if err != nil {
+	// 	revel.INFO.Fatal(err)
+	// }
+	// err = wc.Close()
+	// if err != nil {
+	// 	revel.INFO.Fatal(err)
+	// }
+
+	// // Send the QUIT command and close the connection.
+	// err = smcl.Quit()
+	// if err != nil {
+	// 	revel.INFO.Fatal(err)
+	// }
 
 	// all good, we log the user in and redirect him to Index
 	c.Session["user"] = registerUsername

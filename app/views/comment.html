@@ -15,12 +15,16 @@
              var converter = new showdown.Converter(),
                  html      = converter.makeHtml({{ .Content }});
 
-             html = jQuery.truncate(html, {
+             truncHtml = jQuery.truncate(html, {
                  length: 600,
-                 ellipsis: ' ...<hr><a class="alert alert-info pull-left" href="/comment/{{ .Id }}">See full comment</a>',
+                 ellipsis: ' ...<hr><button type="button" class="btn btn-primary pull-left" id="expand-button-{{.Id}}">See full comment</button>',
                  words: true
              });
-             document.getElementById("content-markdown-{{.Id}}").innerHTML = html
+             document.getElementById("content-markdown-{{.Id}}").innerHTML = truncHtml
+
+             $('#expand-button-{{.Id}}').click(function (e) {
+                 document.getElementById("content-markdown-{{.Id}}").innerHTML = html;
+             });
             </script>
         </div><!-- /panel panel-default -->
     </div><!-- /col-sm-5 -->
@@ -28,6 +32,9 @@
 
 
 <style>
+ .panel-body {
+     word-wrap: break-word;
+ }
  .thumbnail {
      padding:0px;
  }
