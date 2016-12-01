@@ -9,4 +9,16 @@
     {{ end }}
 </div>
 
+{{ if .commentId }}
+<script>
+ $("#content-markdown-{{.commentId}}").closest("div").effect("highlight", {}, 10000);
+
+ $("#content-markdown-{{.commentId}}").animatedScroll(
+     {
+         easing: 'easeOutExpo'
+     }
+ );
+</script>
+{{ end }}
+
 {{template "footer.html" .}}

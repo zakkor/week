@@ -42,7 +42,7 @@ func (c App) Feed() revel.Result {
 		return c.Redirect(User.SignIn)
 	}
 
-	Posts := []Post{}
+	posts := []Post{}
 
 	rows, err := app.DB.Queryx("SELECT * FROM posts ORDER BY date DESC")
 
@@ -56,7 +56,7 @@ func (c App) Feed() revel.Result {
 				revel.INFO.Println("error")
 				revel.INFO.Println(err)
 			} else {
-				Posts = append(Posts, post)
+				posts = append(posts, post)
 			}
 		}
 	}
@@ -64,7 +64,7 @@ func (c App) Feed() revel.Result {
 	defer rows.Close()
 
 	userName := string(c.Session["user"])
-	return c.Render(userName, Posts)
+	return c.Render(userName, posts)
 }
 
 func (c App) EditPost() revel.Result {
@@ -109,10 +109,10 @@ func (c App) SubmitComment(parentId, contentInput string) revel.Result {
 	id := ""
 	res.Scan(&id)
 	revel.INFO.Println(id)
-	return c.Redirect("/post/%s", parentId) //TODO:
+	return c.Redirect("/post/%s?commentId=%s", parentId, id)
 }
 
-func (c App) ViewPost(id string) revel.Result {
+func (c App) ViewPost(id string, commentId string) revel.Result {
 	rows, err := app.DB.Queryx("SELECT * FROM posts WHERE id=$1", id)
 
 	if err != nil {
@@ -168,5 +168,5 @@ func (c App) ViewPost(id string) revel.Result {
 	}
 
 	userName := string(c.Session["user"])
-	return c.Render(userName, post, comments)
+	return c.Render(userName, post, comments, commentId)
 }
