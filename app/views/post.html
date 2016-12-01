@@ -1,3 +1,20 @@
+<style>
+ .panel-body {
+     background-color: #fcfcfc;
+ }
+ .lead {
+     word-wrap: break-word;
+ }
+
+ #title {
+     color:#333333;
+ }
+ #title:hover {
+     color:#333333;
+     text-decoration: none;
+ }
+</style>
+
 
 <div class="container">
     <div class="well">
@@ -9,7 +26,7 @@
 		            <!-- Blog Post -->
 
 		            <!-- Title -->
-                <h1><a href="/post/{{.Id}}">{{.Title}}</a></h1>
+                <h1><a id="title" href="/post/{{.Id}}">{{.Title}}</a></h1>
 
 		            <!-- Author -->
 		            <p class="lead">
@@ -33,7 +50,7 @@
 
                  html = jQuery.truncate(html, {
                      length: 1000,
-                     ellipsis: ' ...<hr><div class="container"><div class="row"><div class="col-md-2"><a role="button" class="btn btn-primary pull-left" href="/post/{{ .Id }}">Read more</a></div><div class="col-md-2"><h6 class="pull-left">3674 words</h6></div><div class="col-md-2"><h6 class="pull-left">24 minute read</h6></div></div></div>',
+                     ellipsis: ' ...<hr><a role="button" class="btn btn-primary pull-left" href="/post/{{ .Id }}">Read more</a>',
                      words: true
                  });
 
@@ -42,12 +59,6 @@
 
 
 		            <!-- Blog Comments -->
-
-		            <style>
-		             .lead {
-                     word-wrap: break-word;
-		             }
-		            </style>
             </div>
 	      </div>
     </div>
