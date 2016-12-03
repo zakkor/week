@@ -191,3 +191,12 @@ func (c *User) Settings() revel.Result {
 	userName := string(c.Session["user"])
 	return c.Render(userName)
 }
+
+func (c *User) Tags() revel.Result {
+	if res := checkSession(&c.Session, &c.Flash); !res {
+		return c.Redirect(User.SignIn)
+	}
+
+	userName := string(c.Session["user"])
+	return c.Render(userName)
+}

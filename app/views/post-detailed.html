@@ -13,35 +13,43 @@
  .jumbotron h1 {
      font-size: 3em;
  }
+ .vcenter {
+     display: inline-block;
+     vertical-align: middle;
+     float: none;
+ }
 </style>
 
 <div style="background-color: #f9f9f9;" class="jumbotron">
     <div class="container">
         <h1>{{.Title}}</h1>
 
-		    <!-- Author -->
-		    <p class="lead">
+	<!-- Author -->
+	<p class="lead">
             by <a href="#">{{.Author}}</a>
-		    </p>
+	</p>
 
-		    <!-- Date/Time -->
-		    <p style="font-size: 1em;"><span class="glyphicon glyphicon-time"></span> Posted on {{ .Date }}</p>
+	<!-- Date/Time -->
+
+	<p style="font-size: 1em;"><span class="glyphicon glyphicon-time"></span> Posted on {{ .Date }}</p>
+
+	<!-- Tags -->
+	{{ range .Tags }}
+	<h4 style="display:inline-block;"><a href="/tag/{{ . }}" class="label label-primary">{{ . }}</a></h4>
+	{{ end }}
+
     </div>
 </div>
 
 <div class="container">
     <!-- <div class="well"> -->
-	  <div class="row">
+    <div class="row">
         <!-- Blog Post Content Column -->
         <div class="col-lg-12">
-		        <!-- Blog Post -->
-
-		        <!-- Title -->
-
-		        <!-- Post Content -->
+	    <!-- Post Content -->
             <div class="panel panel-default">
                 <div class="panel-body">
-		                <p class="lead" style="font-size: 1.5em;" id="content-markdown"></p>
+		    <p class="lead" style="font-size: 1.5em;" id="content-markdown"></p>
                 </div>
             </div>
             <script>
@@ -51,35 +59,35 @@
             </script>
 
             <style>
-		         .lead {
+	     .lead {
                  word-wrap: break-word;
-		         }
+	     }
              .CodeMirror {
                  height: 100px;
              }
              .panel-body {
                  background-color: #fcfcfc;
              }
-		        </style>
+	    </style>
 
-		        <!-- Blog Comments -->
+	    <!-- Blog Comments -->
 
-		        <!-- Comments Form -->
+	    <!-- Comments Form -->
 
             <div class="well alert alert-info">
                 <h4>Leave a Comment:</h4>
                 <form role="form" method="post" action="{{url "App.SubmitComment"}}">
-			              <div class="form-group">
-			                  <textarea id="{{ .Id }}" name="contentInput"></textarea>
-			                  <script>
-			                   var simplemde = new SimpleMDE({ element: document.getElementById("{{ .Id }}") });
-			                  </script>
-			              </div>
+		    <div class="form-group">
+			<textarea id="{{ .Id }}" name="contentInput"></textarea>
+			<script>
+			 var simplemde = new SimpleMDE({ element: document.getElementById("{{ .Id }}") });
+			</script>
+		    </div>
                     <input type="hidden" name="parentId" value="{{.Id}}"/>
-			              <button type="submit" class="btn btn-primary">Submit</button>
+		    <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
-		        </div>
+	    </div>
         </div>
-	  </div>
+    </div>
     <!-- </div> -->
 </div>

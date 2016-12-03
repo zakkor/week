@@ -18,27 +18,34 @@
 
 <div class="container">
     <div class="well" style="background-color: #f9f9f9;">
-	      <div class="row">
+	<div class="row">
             <!-- Blog Post Content Column -->
             <div class="col-lg-12">
 
-		            <!-- Blog Post -->
+		<!-- Blog Post -->
 
-		            <!-- Title -->
+		<!-- Title -->
                 <h1><a id="title" href="/post/{{.Id}}">{{.Title}}</a></h1>
 
-		            <!-- Author -->
-		            <p class="lead">
+		<!-- Author -->
+		<p class="lead">
                     by <a href="#">{{.Author}}</a>
-		            </p>
+		</p>
 
-		            <!-- Date/Time -->
-		            <p><span class="glyphicon glyphicon-time"></span> Posted on {{ .Date }}</p>
+		<!-- Date/Time -->
+		<p><span class="glyphicon glyphicon-time"></span> Posted on {{ .Date }}</p>
 
-		            <!-- Post Content -->
+		<!-- Tags -->
+		<div id="tags" style="margin-bottom: 10px;">
+		{{ range .Tags }}
+		<h4 style="display:inline-block;"><a href="/tag/{{ . }}" class="label label-primary">{{ . }}</a></h4>
+		{{ end }}
+		</div>
+
+		<!-- Post Content -->
                 <div class="panel panel-default">
                     <div class="panel-body">
-		                    <p class="lead" id="content-markdown-{{ .Id }}"></p>
+		        <p class="lead" id="content-markdown-{{ .Id }}"></p>
                     </div>
                 </div>
 
@@ -57,8 +64,8 @@
                 </script>
 
 
-		            <!-- Blog Comments -->
+		<!-- Blog Comments -->
             </div>
-	      </div>
+	</div>
     </div>
 </div>

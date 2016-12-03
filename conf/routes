@@ -14,6 +14,7 @@ GET     /public/*filepath                       Static.Serve("public")
 
 GET     /post/:id                               App.ViewPost
 GET     /comment/:id                            App.ViewComment
+GET     /tag/:tag                           	App.BrowseTag
 GET     /edit                                   App.EditPost
 GET     /feed                                   App.Feed
 
