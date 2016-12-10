@@ -1,11 +1,12 @@
 package controllers
 
 import (
+	"strings"
+	"github.com/zakkor/week/app"
+
 	"github.com/jmoiron/sqlx"
 	"github.com/lib/pq"
 	"github.com/revel/revel"
-	"strings"
-	"week/app"
 )
 
 type App struct {
@@ -53,7 +54,7 @@ func (c App) Feed() revel.Result {
 	}
 
 	posts := []Post{}
-	placeholder := []string{"mate", "not technology"}
+	placeholder := []string{"technology", "not technology"}
 
 	// pull this user's tags from db
 	rows, err := app.DB.Queryx("SELECT * FROM posts WHERE tags && $1 ORDER BY date DESC", pq.Array(&placeholder))
@@ -95,7 +96,6 @@ func (c App) SubmitPost(titleInput, tagsInput, contentInput string) revel.Result
 	tags := strings.Split(tagsInput, ",")
 
 	if len(tags) > 3 {
-
 		c.Flash.Error("You can have a maximum of 3 tags")
 		return c.Redirect(App.EditPost)
 	}
@@ -125,14 +125,14 @@ func (c App) SubmitPost(titleInput, tagsInput, contentInput string) revel.Result
 	return c.Redirect("/post/%s", id)
 }
 
-func (c App) SubmitComment(parentId, contentInput string) revel.Result {
+func (c App) SubmitComment(parentID, contentInput string) revel.Result {
 	if res := checkSession(&c.Session, &c.Flash); !res {
 		return c.Redirect(User.SignIn)
 	}
 
 	userName := string(c.Session["user"])
 
-	res, err := app.DB.Queryx("INSERT INTO comments VALUES(DEFAULT, $1, $2, now(), $3) RETURNING id", parentId, userName, contentInput)
+	res, err := app.DB.Queryx("INSERT INTO comments VALUES(DEFAULT, $1, $2, now(), $3) RETURNING id", parentID, userName, contentInput)
 	if err != nil {
 		revel.INFO.Println(err)
 	}
@@ -140,10 +140,10 @@ func (c App) SubmitComment(parentId, contentInput string) revel.Result {
 	id := ""
 	res.Scan(&id)
 	revel.INFO.Println(id)
-	return c.Redirect("/post/%s?commentId=%s", parentId, id)
+	return c.Redirect("/post/%s?commentId=%s", parentID, id)
 }
 
-func (c App) ViewPost(id string, commentId string) revel.Result {
+func (c App) ViewPost(id string, commentID string) revel.Result {
 	rows, err := app.DB.Queryx("SELECT * FROM posts WHERE id=$1", id)
 
 	if err != nil {
@@ -202,7 +202,7 @@ func (c App) ViewPost(id string, commentId string) revel.Result {
 	}
 
 	userName := string(c.Session["user"])
-	return c.Render(userName, post, comments, commentId)
+	return c.Render(userName, post, comments, commentID)
 }
 
 func (c App) ViewComment(id string) revel.Result {

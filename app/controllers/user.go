@@ -4,7 +4,7 @@ import (
 	"encoding/hex"
 	"github.com/revel/revel"
 	"golang.org/x/crypto/scrypt"
-	"week/app"
+	"github.com/zakkor/week/app"
 )
 
 type User struct {

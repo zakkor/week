@@ -5,7 +5,7 @@ import (
 	"math/rand"
 	"strconv"
 	"time"
-	"week/app"
+	"github.com/zakkor/week/app"
 )
 
 func checkSession(c *revel.Session, f *revel.Flash) bool {
