@@ -16,7 +16,8 @@ func checkSession(c *revel.Session, f *revel.Flash) bool {
 		return false
 	}
 	res.Next()
-	dbSid := ""
+
+	var dbSid string
 	res.Scan(&dbSid)
 
 	if dbSid == (*c)["sid"] && dbSid != "" && (*c)["sid"] != "" {
@@ -26,7 +27,7 @@ func checkSession(c *revel.Session, f *revel.Flash) bool {
 	revel.INFO.Println("invalid session!!!!")
 	// TODO: report to the fbi
 
-	(*f).Error("You must log in or register")
+	f.Error("You must log in or register")
 	return false
 }
 
