@@ -105,8 +105,6 @@ func (c App) SubmitPost(titleInput, tagsInput, contentInput string) revel.Result
 		trimmedTags = append(trimmedTags, strings.Trim(tag, " "))
 	}
 
-	revel.INFO.Println(tags)
-
 	userName := string(c.Session["user"])
 
 	res, err := app.DB.Queryx("INSERT INTO posts VALUES(DEFAULT, $1, $2, now(), $3, $4) RETURNING id",
@@ -118,10 +116,11 @@ func (c App) SubmitPost(titleInput, tagsInput, contentInput string) revel.Result
 	if err != nil {
 		revel.INFO.Println(err)
 	}
+
+	var id string
 	res.Next()
-	id := ""
 	res.Scan(&id)
-	revel.INFO.Println(id)
+
 	return c.Redirect("/post/%s", id)
 }
 
@@ -156,9 +155,7 @@ func (c App) ViewPost(id string, commentID string) revel.Result {
 
 	post := Post{}
 
-	// 1 result guaranteed, so we don't use for
 	rows.Next()
-
 	if err := post.scan(rows); err != nil {
 
 		revel.INFO.Println("error")
@@ -184,8 +181,6 @@ func (c App) ViewPost(id string, commentID string) revel.Result {
 	defer rows.Close()
 
 	comments := []Comment{}
-
-	// 1 result guaranteed, so we don't use for
 	for rows.Next() {
 		comm := Comment{}
 		if err := rows.StructScan(&comm); err != nil {
@@ -215,11 +210,8 @@ func (c App) ViewComment(id string) revel.Result {
 
 	defer rows.Close()
 
-	comment := Comment{}
-
-	// 1 result guaranteed, so we don't use for
 	rows.Next()
-
+	comment := Comment{}
 	if err := rows.StructScan(&comment); err != nil {
 		revel.INFO.Println("error")
 		revel.INFO.Println(err)

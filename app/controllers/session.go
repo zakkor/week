@@ -24,8 +24,7 @@ func checkSession(c *revel.Session, f *revel.Flash) bool {
 		return true
 	}
 
-	revel.INFO.Println("invalid session!!!!")
-	// TODO: report to the fbi
+	revel.INFO.Println("Error: invalid session!")
 
 	f.Error("You must log in or register")
 	return false

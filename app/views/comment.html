@@ -13,20 +13,20 @@
             </div>
             <div class="panel-body"><p class="lead" id="content-markdown-{{.Id}}" style="font-size: 1.5em;"> </p></div><!-- /panel-body -->
             <script>
-             var converter = new showdown.Converter(),
-                 html      = converter.makeHtml({{ .Content }});
+                var converter = new showdown.Converter(),
+                    html      = converter.makeHtml({{ .Content }});
 
-             html = jQuery.truncate(html, {
-                 length: 600,
-                 ellipsis: ' ...<hr><button type="button" class="btn btn-primary pull-left" id="expand-button-{{.Id}}">See full comment</button>',
-                 words: true
-             });
-             document.getElementById("content-markdown-{{.Id}}").innerHTML = html
+                html = jQuery.truncate(html, {
+                    length: 600,
+                    ellipsis: ' ...<hr><button type="button" class="btn btn-primary pull-left" id="expand-button-{{.Id}}">See full comment</button>',
+                    words: true
+                });
+                document.getElementById("content-markdown-{{.Id}}").innerHTML = html
 
-             $('#expand-button-{{.Id}}').click(function (e) {
-                 html = converter.makeHtml({{ .Content }});
-                 document.getElementById("content-markdown-{{.Id}}").innerHTML = html;
-             });
+                $('#expand-button-{{.Id}}').click(function (e) {
+                    html = converter.makeHtml({{ .Content }});
+                    document.getElementById("content-markdown-{{.Id}}").innerHTML = html;
+                });
             </script>
         </div><!-- /panel panel-default -->
     </div><!-- /col-sm-5 -->
@@ -34,35 +34,35 @@
 
 
 <style>
- .panel-body {
-     word-wrap: break-word;
- }
- .thumbnail {
-     padding:0px;
- }
- .panel {
-	   position:relative;
- }
- .panel>.panel-heading:after,.panel>.panel-heading:before{
-	   position:absolute;
-	   top:11px;left:-16px;
-	   right:100%;
-	   width:0;
-	   height:0;
-	   display:block;
-	   content:" ";
-	   border-color:transparent;
-	   border-style:solid solid outset;
-	   pointer-events:none;
- }
- .panel>.panel-heading:after{
-	   border-width:7px;
-	   border-right-color:#f7f7f7;
-	   margin-top:1px;
-	   margin-left:2px;
- }
- .panel>.panel-heading:before{
-	   border-right-color:#ddd;
-	   border-width:8px;
- }
+    .panel-body {
+        word-wrap: break-word;
+    }
+    .thumbnail {
+        padding:0px;
+    }
+    .panel {
+        position:relative;
+    }
+    .panel>.panel-heading:after,.panel>.panel-heading:before{
+        position:absolute;
+        top:11px;left:-16px;
+        right:100%;
+        width:0;
+        height:0;
+        display:block;
+        content:" ";
+        border-color:transparent;
+        border-style:solid solid outset;
+        pointer-events:none;
+    }
+    .panel>.panel-heading:after{
+        border-width:7px;
+        border-right-color:#f7f7f7;
+        margin-top:1px;
+        margin-left:2px;
+    }
+    .panel>.panel-heading:before{
+        border-right-color:#ddd;
+        border-width:8px;
+    }
 </style>

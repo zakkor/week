@@ -1,42 +1,48 @@
 <style>
- .navbar {
-     margin-bottom: 0px;
- }
- .jumbotron {
-     padding: 0.7em 0.8em;
-     border-bottom: 1px solid #dbdbdb;
-     margin-bottom: 20px;
- }
- .jumbotron p {
-     font-size: 1.8em;
- }
- .jumbotron h1 {
-     font-size: 3em;
- }
- .vcenter {
-     display: inline-block;
-     vertical-align: middle;
-     float: none;
- }
+    .navbar {
+        margin-bottom: 0px;
+    }
+    .jumbotron {
+        padding: 0.7em 0.8em;
+        border-bottom: 1px solid #dbdbdb;
+        margin-bottom: 20px;
+    }
+    .jumbotron p {
+        font-size: 1.8em;
+    }
+    .jumbotron h1 {
+        font-size: 3em;
+    }
+    .vcenter {
+        display: inline-block;
+        vertical-align: middle;
+        float: none;
+    }
+    .lead {
+        word-wrap: break-word;
+    }
+    .panel-body {
+        background-color: #fcfcfc;
+    }
 </style>
 
 <div style="background-color: #f9f9f9;" class="jumbotron">
     <div class="container">
         <h1>{{.Title}}</h1>
 
-	<!-- Author -->
-	<p class="lead">
+        <!-- Author -->
+        <p class="lead">
             by <a href="#">{{.Author}}</a>
-	</p>
+        </p>
 
-	<!-- Date/Time -->
+        <!-- Date/Time -->
 
-	<p style="font-size: 1em;"><span class="glyphicon glyphicon-time"></span> Posted on {{ .Date }}</p>
+        <p style="font-size: 1em;"><span class="glyphicon glyphicon-time"></span> Posted on {{ .Date }}</p>
 
-	<!-- Tags -->
-	{{ range .Tags }}
-	<h4 style="display:inline-block;"><a href="/tag/{{ . }}" class="label label-primary">{{ . }}</a></h4>
-	{{ end }}
+        <!-- Tags -->
+        {{ range .Tags }}
+        <h4 style="display:inline-block;"><a href="/tag/{{ . }}" class="label label-primary">{{ . }}</a></h4>
+        {{ end }}
 
     </div>
 </div>
@@ -46,48 +52,33 @@
     <div class="row">
         <!-- Blog Post Content Column -->
         <div class="col-lg-12">
-	    <!-- Post Content -->
+            <!-- Post Content -->
             <div class="panel panel-default">
                 <div class="panel-body">
-		    <p class="lead" style="font-size: 1.5em;" id="content-markdown"></p>
+                    <p class="lead" style="font-size: 1.5em;" id="content-markdown"></p>
                 </div>
             </div>
             <script>
-             var converter = new showdown.Converter(),
-                 html      = converter.makeHtml({{ .Content }});
-             document.getElementById("content-markdown").innerHTML = html
+                var converter = new showdown.Converter(),
+                    html      = converter.makeHtml({{ .Content }});
+                document.getElementById("content-markdown").innerHTML = html
             </script>
 
-            <style>
-	     .lead {
-                 word-wrap: break-word;
-	     }
-             .CodeMirror {
-                 height: 100px;
-             }
-             .panel-body {
-                 background-color: #fcfcfc;
-             }
-	    </style>
-
-	    <!-- Blog Comments -->
-
-	    <!-- Comments Form -->
+            <!-- Comments Form -->
 
             <div class="well alert alert-info">
                 <h4>Leave a Comment:</h4>
                 <form role="form" method="post" action="{{url "App.SubmitComment"}}">
-		    <div class="form-group">
-			<textarea id="{{ .Id }}" name="contentInput"></textarea>
-			<script>
-			 var simplemde = new SimpleMDE({ element: document.getElementById("{{ .Id }}") });
-			</script>
-		    </div>
-                    <input type="hidden" name="parentID" value="{{.Id}}"/>
-		    <button type="submit" class="btn btn-primary">Submit</button>
+                <div class="form-group">
+                    <textarea id="{{ .Id }}" name="contentInput"></textarea>
+                    <script>
+                        var simplemde = new SimpleMDE({ element: document.getElementById("{{ .Id }}") });
+                    </script>
+                </div>
+                <input type="hidden" name="parentID" value="{{.Id}}"/>
+                <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
-	    </div>
+            </div>
         </div>
     </div>
-    <!-- </div> -->
 </div>

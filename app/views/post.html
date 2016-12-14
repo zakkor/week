@@ -1,71 +1,71 @@
 <style>
- .panel-body {
-     background-color: #fcfcfc;
- }
- .lead {
-     word-wrap: break-word;
- }
+    .panel-body {
+        background-color: #fcfcfc;
+    }
+    .lead {
+        word-wrap: break-word;
+    }
 
- #title {
-     color:#333333;
- }
- #title:hover {
-     color:#333333;
-     text-decoration: none;
- }
+    #title {
+        color:#333333;
+    }
+    #title:hover {
+        color:#333333;
+        text-decoration: none;
+    }
 </style>
 
 
 <div class="container">
     <div class="well" style="background-color: #f9f9f9;">
-	<div class="row">
+        <div class="row">
             <!-- Blog Post Content Column -->
             <div class="col-lg-12">
 
-		<!-- Blog Post -->
+                <!-- Blog Post -->
 
-		<!-- Title -->
+                <!-- Title -->
                 <h1><a id="title" href="/post/{{.Id}}">{{.Title}}</a></h1>
 
-		<!-- Author -->
-		<p class="lead">
+                <!-- Author -->
+                <p class="lead">
                     by <a href="#">{{.Author}}</a>
-		</p>
+                </p>
 
-		<!-- Date/Time -->
-		<p><span class="glyphicon glyphicon-time"></span> Posted on {{ .Date }}</p>
+                <!-- Date/Time -->
+                <p><span class="glyphicon glyphicon-time"></span> Posted on {{ .Date }}</p>
 
-		<!-- Tags -->
-		<div id="tags" style="margin-bottom: 10px;">
-		{{ range .Tags }}
-		<h4 style="display:inline-block;"><a href="/tag/{{ . }}" class="label label-primary">{{ . }}</a></h4>
-		{{ end }}
-		</div>
+                <!-- Tags -->
+                <div id="tags" style="margin-bottom: 10px;">
+                    {{ range .Tags }}
+                    <h4 style="display:inline-block;"><a href="/tag/{{ . }}" class="label label-primary">{{ . }}</a></h4>
+                    {{ end }}
+                </div>
 
-		<!-- Post Content -->
+                <!-- Post Content -->
                 <div class="panel panel-default">
                     <div class="panel-body">
-		        <p class="lead" id="content-markdown-{{ .Id }}"></p>
+                        <p class="lead" id="content-markdown-{{ .Id }}"></p>
                     </div>
                 </div>
 
                 <script>
-                 showdown.setOption('parseImgDimensions', 'true');
-                 var converter = new showdown.Converter(),
-                     html      = converter.makeHtml({{ .Content }});
+                    showdown.setOption('parseImgDimensions', 'true');
+                    var converter = new showdown.Converter(),
+                        html      = converter.makeHtml({{ .Content }});
 
-                 html = jQuery.truncate(html, {
-                     length: 1000,
-                     ellipsis: ' ...<hr><a role="button" class="btn btn-primary pull-left" href="/post/{{ .Id }}">Read more</a>',
-                     words: true
-                 });
+                    html = jQuery.truncate(html, {
+                        length: 1000,
+                        ellipsis: ' ...<hr><a role="button" class="btn btn-primary pull-left" href="/post/{{ .Id }}">Read more</a>',
+                        words: true
+                    });
 
-                 document.getElementById("content-markdown-{{ .Id }}").innerHTML = html
+                    document.getElementById("content-markdown-{{ .Id }}").innerHTML = html
                 </script>
 
 
-		<!-- Blog Comments -->
+                <!-- Blog Comments -->
             </div>
-	</div>
+        </div>
     </div>
 </div>
